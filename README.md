@@ -105,3 +105,12 @@ By working through this project, I:
 * Practiced writing testbenches for functional verification
 * Gained hands-on experience using EDA Playground
 
+-----------------------------------------------------------------------------------
+
+###OUTPUT WAVEFORM:
+
+<img width="1864" height="481" alt="Image" src="https://github.com/user-attachments/assets/7d182c9b-d5ee-4bec-b682-d643bfb012e3" />
+
+-------------------------------------------------------------------------------------
+end.
+
