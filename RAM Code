@@ -1,0 +1,80 @@
+// DESIGN CODE
+module ram (input clk, rst,wr,rd,
+            input [31:0] addr,
+            input [7:0] data_in,
+            output reg [7:0] data_o);
+  reg [7:0]mem[31:0];
+  always @(posedge clk)begin
+    if(rst ==1)
+      begin
+        
+        for(int i=0; i<31; i++) begin
+          mem[i]=data_in;
+        end
+      end
+    if (wr==1)
+      begin
+        for(int i=0; i<31; i++) begin
+        mem[i]= data_in;
+          #10;
+        end
+      end
+    if (rd==1)
+      begin
+        for(int i=0; i<31; i++) begin 
+          data_o=mem[i];
+          #10;
+        end
+      end
+    else
+      $display("Nothing executed ");
+  end
+endmodule
+
+
+//TESTBENCH CODE
+
+module tb;
+  reg clk=0,rst,wr,rd;
+  reg [31:0]addr;
+  reg [7:0]data_in;
+  wire [7:0]data_o;
+  ram dut(.*);
+  always #5 clk= ~clk;
+  initial begin
+    //reset condition
+    clk =0;
+    rst=1;wr=0;rd=0;
+    for(int i=0;i<31;i++)begin
+      #5;
+      addr=i;
+      data_in=8'b00;
+      #5;
+    end
+    // write conditon
+    rst=0;#10;
+    wr=1;rd=0;
+    for(int i=0; i<31; i++)begin
+      addr=i;
+      data_in=i;
+       #10;
+    end
+    // read conditon
+    rst=0;
+    wr=0;#5;rd=1;
+    for(int i=0; i<31; i++)begin
+      addr=i;
+      #10;
+    end
+    #20;
+    $finish();
+  end
+    
+  initial begin
+    $dumpfile("dump.vcd");
+    $dumpvars();
+  end
+
+endmodule
+
+--------------------------------------------------------------------------------------------------------------------------
